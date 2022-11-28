@@ -10,18 +10,18 @@ class ListNode {
      *    numbers, objects, etc.
      * @returns {ListNode} A new Node instance is returned automatically without
      *    having to be explicitly written (implicit return).
-     */
+    */
     constructor(data) {
-      this.data = data;
-      /**
-       * This property is used to link this node to whichever node is next
-       * in the list. By default, this new node is not linked to any other
-       * nodes, so the setting / updating of this property will happen sometime
-       * after this node is created.
-       *
-       * @type {ListNode|null}
-       */
-      this.next = null;
+        this.data = data;
+        /**
+         * This property is used to link this node to whichever node is next
+         * in the list. By default, this new node is not linked to any other
+         * nodes, so the setting / updating of this property will happen sometime
+         * after this node is created.
+         *
+         * @type {ListNode|null}
+         */
+        this.next = null;
     }
 }
   
@@ -35,10 +35,10 @@ class SinglyLinkedList {
      * methods.
      * @returns {SinglyLinkedList} The new list that is instantiated is implicitly
      *    returned without having to explicitly write "return".
-     */
+    */
     constructor() {
-      /** @type {ListNode|null} */
-      this.head = null;
+        /** @type {ListNode|null} */
+        this.head = null;
     }
   
     /**
@@ -46,7 +46,7 @@ class SinglyLinkedList {
      * - Time: O(?).
      * - Space: O(?).
      * @returns {boolean}
-     */
+    */
     isEmpty() {}
   
     /**
@@ -56,7 +56,7 @@ class SinglyLinkedList {
      * - Space: O(?).
      * @param {any} data The data to be added to the new node.
      * @returns {SinglyLinkedList} This list.
-     */
+    */
     insertAtBack(data) {}
   
     /**
@@ -68,7 +68,7 @@ class SinglyLinkedList {
      * @param {?ListNode} runner The current node during the traversal of this list
      *    or null when the end of the list has been reached.
      * @returns {SinglyLinkedList} This list.
-     */
+    */
     insertAtBackRecursive(data, runner = this.head) {}
   
     /**
@@ -77,7 +77,7 @@ class SinglyLinkedList {
      * - Space: O(1) constant.
      * @param {Array<any>} vals The data for each new node.
      * @returns {SinglyLinkedList} This list.
-     */
+    */
     insertAtBackMany(vals) {
       for (const item of vals) {
         this.insertAtBack(item);
@@ -90,16 +90,16 @@ class SinglyLinkedList {
      * - Time: O(n) linear.
      * - Space: O(n).
      * @returns {Array<any>} An array of each node's data.
-     */
+    */
     toArr() {
-      const arr = [];
-      let runner = this.head;
-  
-      while (runner) {
-        arr.push(runner.data);
-        runner = runner.next;
-      }
-      return arr;
+        const arr = [];
+        let runner = this.head;
+
+        while (runner) {
+            arr.push(runner.data);
+            runner = runner.next;
+        }
+        return arr;
     }
 }
   
