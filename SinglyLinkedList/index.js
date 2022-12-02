@@ -42,35 +42,128 @@ class SinglyLinkedList {
     }
 
     /**
-     * Retrieves the data of the second to last node in this list.
+     * Concatenates the nodes of a given list onto the back of this list.
      * - Time: O(?).
      * - Space: O(?).
-     * @returns {any} The data of the second to last node or null if there is no
-     *    second to last node.
-    */
-    secondToLast() {}
+     * @param {SinglyLinkedList} addList An instance of a different list whose
+     *    whose nodes will be added to the back of this list.
+     * @returns {SinglyLinkedList} This list with the added nodes.
+     */
+    concat(addList) {}
 
     /**
-     * Removes the node that has the matching given val as it's data.
+     * Finds the node with the smallest data and moves that node to the front of
+     * this list.
      * - Time: O(?).
      * - Space: O(?).
-     * @param {any} val The value to compare to the node's data to find the
-     *    node to be removed.
-     * @returns {boolean} Indicates if a node was removed or not.
-    */
-    removeVal(val) {}
+     * @returns {SinglyLinkedList} This list.
+     */
+    moveMinToFront() {}
 
     // EXTRA
     /**
-     * Inserts a new node before a node that has the given value as its data.
+     * Splits this list into two lists where the 2nd list starts with the node
+     * that has the given value.
+     * splitOnVal(5) for the list (1=>3=>5=>2=>4) will change list to (1=>3)
+     * and the return value will be a new list containing (5=>2=>4)
      * - Time: O(?).
      * - Space: O(?).
+     * @param {any} val The value in the node that the list should be split on.
+     * @returns {SinglyLinkedList} The split list containing the nodes that are
+     *    no longer in this list.
+     */
+    splitOnVal(val) {}
+
+        /**
+     * Retrieves the data of the second to last node in this list.
+     * - Time: O(n - 1) n = list length -> O(n) linear.
+     * - Space: O(1) constant.
+     * @returns {any} The data of the second to last node or null if there is no
+     *    second to last node.
+     */
+    secondToLast() {
+        if (!this.head || !this.head.next) {
+            return null;
+        }
+
+        // There are at least 2 nodes since the above return hasn't happened.
+        let runner = this.head;
+
+        while (runner.next.next) {
+            runner = runner.next;
+        }
+        return runner.data;
+    }
+
+    /**
+     * Removes the node that has the given val.
+     * - Time: O(n) linear, n = list length since the last node could be the one
+     *    that is removed.
+     * - Space: O(1) constant.
+     * @param {any} val The value to compare to the node's data to find the
+     *    node to be removed.
+     * @returns {boolean} Indicates if a node was removed or not.
+     */
+    removeVal(val) {
+        if (this.isEmpty()) {
+            return false;
+        }
+
+        if (this.head.data === val) {
+            this.removeHead();
+            return true;
+        }
+
+        let runner = this.head;
+
+        while (runner.next) {
+            if (runner.next.data === val) {
+                runner.next = runner.next.next;
+                return true;
+            }
+            runner = runner.next;
+        }
+        return false;
+    }
+
+    /**
+     * Inserts a new node before a node with that has a specified value.
+     * - Time: O(n) linear, n = list length, because we could end up pre-pending
+     *    to the last node.
+     * - Space: O(1) constant.
      * @param {any} newVal The value to use for the new node that is being added.
      * @param {any} targetVal The value to use to find the node that the newVal
      *    should be inserted in front of.
-     * @returns {boolean} To indicate whether the node was pre-pended or not.
-    */
-    prepend(newVal, targetVal) {}
+     * @returns {ListNode|null} The added node, or null.
+     */
+    prepend(newVal, targetVal) {
+        if (this.isEmpty()) {
+            return null;
+        }
+
+        if (this.head.data === targetVal) {
+            this.insertAtFront(newVal);
+            return this.head;
+        }
+
+        // we already know we're not going to need to prepend before the head
+        let runner = this.head;
+
+        while (runner) {
+        // End of list and not found.
+            if (runner.next === null) {
+                return null;
+            }
+
+            if (runner.next.data === targetVal) {
+                const prependNode = new ListNode(newVal);
+                prependNode.next = runner.next;
+                runner.next = prependNode;
+                return prependNode;
+            }
+            runner = runner.next;
+        }
+    }
 
     /**
      * Removes the last node of this list.
