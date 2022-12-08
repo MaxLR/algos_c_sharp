@@ -39,26 +39,109 @@ class BSTNode {
     }
 
     /**
-     * Inserts a new node with the given newVal in the right place to preserver
-     * the order of this tree.
-     * - Time: O(?).
-     * - Space: O(?).
-     * @param {number} newVal The data to be added to a new node.
-     * @returns {BinarySearchTree} This tree.
+     * DFS Preorder: (CurrNode, Left, Right)
+     * Converts this BST into an array following Depth First Search preorder.
+     * Example on the fullTree var:
+     * [25, 15, 10, 4, 12, 22, 18, 24, 50, 35, 31, 44, 70, 66, 90]
+     * @param {Node} node The current node during the traversal of this tree.
+     * @param {Array<number>} vals The data that has been visited so far.
+     * @returns {Array<number>} The vals in DFS Preorder once all nodes visited.
      */
-    insert(newVal) {}
+    toArrPreorder(node = this.root, vals = []) {}
+
+    /**
+     * DFS Inorder: (Left, CurrNode, Right)
+     * Converts this BST into an array following Depth First Search inorder.
+     * See debugger call stack to help understand the recursion.
+     * Example on the fullTree var:
+     * [4, 10, 12, 15, 18, 22, 24, 25, 31, 35, 44, 50, 66, 70, 90]
+     * @param {Node} node The current node during the traversal of this tree.
+     * @param {Array<number>} vals The data that has been visited so far.
+     * @returns {Array<number>} The vals in DFS Preorder once all nodes visited.
+     */
+    toArrInorder(node = this.root, vals = []) {}
+
+    /**
+     * DFS Postorder (Left, Right, CurrNode)
+     * Converts this BST into an array following Depth First Search postorder.
+     * Example on the fullTree var:
+     * [4, 12, 10, 18, 24, 22, 15, 31, 44, 35, 66, 90, 70, 50, 25]
+     * @param {Node} node The current node during the traversal of this tree.
+     * @param {Array<number>} vals The data that has been visited so far.
+     * @returns {Array<number>} The vals in DFS Preorder once all nodes visited.
+     */
+    toArrPostorder(node = this.root, vals = []) {}
 
     /**
      * Inserts a new node with the given newVal in the right place to preserver
      * the order of this tree.
-     * - Time: O(?).
-     * - Space: O(?).
+     * - Time: O(h) linear, h = height of tree because the new node may have to
+     *    be added at the bottom.
+     * - Space: O(1) constant.
      * @param {number} newVal The data to be added to a new node.
-     * @param {Node} curr The node that is currently accessed from the tree as
+     * @returns {BinarySearchTree} This tree.
+     */
+    insert(newVal) {
+      const node = new BSTNode(newVal);
+
+      if (this.isEmpty()) {
+        this.root = node;
+        return this;
+      }
+
+      let current = this.root;
+
+      while (true) {
+        if (newVal <= current.data) {
+          if (current.left === null) {
+            current.left = node;
+            return this;
+          }
+
+          current = current.left;
+        } else {
+          // newVal is greater than current.data
+          if (current.right === null) {
+            current.right = node;
+            return this;
+          }
+
+          current = current.right;
+        }
+      }
+    }
+
+    /**
+     * Inserts a new node with the given newVal in the right place to preserver
+     * the order of this tree.
+     * - Time: O(h) linear, h = height of tree because the new node may have to
+     *    be added at the bottom.
+     * - Space: O(h) linear due to the call stack.
+     * @param {number} newVal The data to be added to a new node.
+     * @param {BSTNode} curr The node that is currently accessed from the tree as
      *    the tree is being traversed.
      * @returns {BinarySearchTree} This tree.
      */
-    insertRecursive(newVal, curr = this.root) {}
+    insertRecursive(newVal, curr = this.root) {
+      if (this.isEmpty()) {
+        this.root = new BSTNode(newVal);
+        return this;
+      }
+
+      if (newVal > curr.data) {
+        if (curr.right === null) {
+          curr.right = new BSTNode(newVal);
+          return this;
+        }
+        return this.insertRecursive(newVal, curr.right);
+      }
+
+      if (curr.left === null) {
+        curr.left = new BSTNode(newVal);
+        return this;
+      }
+      return this.insertRecursive(newVal, curr.left);
+    }
     
     /**
      * Determines if this tree contains the given searchVal.
