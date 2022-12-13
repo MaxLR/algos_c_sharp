@@ -56,24 +56,35 @@ class MinHeap {
         return this.size();
     }
 
+    /**
+     * Retrieves the size of the heap, ignoring the null placeholder.
+     * - Time: O(1) constant.
+     * - Space: O(1) constant.
+     * @returns {number}
+     */
+    size() {
+        // - 1 since 0 index is unused
+        return this.heap.length - 1;
+    }
+
     // AKA: siftUp, heapifyUp, bubbleUp to restore order after insert
     shiftUp() {
         let idxOfNodeToShiftUp = this.heap.length - 1;
 
         while (idxOfNodeToShiftUp > 1) {
-        const idxOfParent = this.idxOfParent(idxOfNodeToShiftUp);
+            const idxOfParent = this.idxOfParent(idxOfNodeToShiftUp);
 
-        const isParentSmallerOrEqual =
-            this.heap[idxOfParent] <= this.heap[idxOfNodeToShiftUp];
+            const isParentSmallerOrEqual =
+                this.heap[idxOfParent] <= this.heap[idxOfNodeToShiftUp];
 
-        // Parent is supposed to be smaller so ordering is complete.
-        if (isParentSmallerOrEqual) {
-            break;
-        }
+            // Parent is supposed to be smaller so ordering is complete.
+            if (isParentSmallerOrEqual) {
+                break;
+            }
 
-        this.swap(idxOfNodeToShiftUp, idxOfParent);
-        // after swapping the node is at idxOfParent now.
-        idxOfNodeToShiftUp = idxOfParent;
+            this.swap(idxOfNodeToShiftUp, idxOfParent);
+            // after swapping the node is at idxOfParent now.
+            idxOfNodeToShiftUp = idxOfParent;
         }
     }
 
