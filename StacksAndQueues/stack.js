@@ -82,3 +82,5 @@ class LinkedListStack {
       this.head = null;
     }
 }
+
+module.exports = { Stack }
